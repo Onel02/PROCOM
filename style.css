@@ -1,0 +1,17 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; padding: 1rem; max-width: 720px; margin-inline: auto; background: #121212; color: #eee; }
+h1, h2 { margin: 0 0 .5rem; }
+section { margin-top: 1.5rem; }
+form { display: flex; gap: .5rem; }
+input { flex: 1; padding: .5rem; border-radius: 6px; border: 1px solid #444; background: #1e1e1e; color: inherit; }
+button { padding: .4rem .8rem; border: 0; border-radius: 6px; background: #1db954; color: #000; cursor: pointer; }
+button:disabled { background: #444; color: #999; cursor: default; }
+button:focus-visible, input:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+#recent { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+#recent button { background: #2a2a2a; color: #eee; }
+.track-list { list-style: none; margin: 0; padding: 0; }
+.track { display: flex; align-items: center; gap: .75rem; padding: .5rem 0; border-bottom: 1px solid #2a2a2a; }
+.track img { width: 48px; height: 48px; border-radius: 4px; }
+.track .info { flex: 1; min-width: 0; }
+.track .name, .track .artist { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.track .artist { color: #aaa; font-size: .85rem; }
