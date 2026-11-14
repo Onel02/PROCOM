@@ -4,7 +4,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const clean = (v) => Array.isArray(v) ? v.join(", ") : (typeof v === "string" && !/upgrade/i.test(v) ? v : "Unknown");
 const setMsg = (sel, text) => { $(sel).textContent = text; };
 
-let currentUser = null, currentPlant = null, garden = [];
+let currentUser = null, currentPlant = null, garden = [], lastResults = [];
 
 function toast(text) {
   const t = $("#toast");
@@ -31,14 +31,16 @@ $("#search-form").addEventListener("submit", async (e) => {
   setMsg("#explore-msg", "Searching...");
   try {
     const list = await Api.search(q);
+    lastResults = list;
     $("#results").innerHTML = list.map((p) => `
-      <article class="card">
+      <article class="card" data-card="${p.id}">
         ${p.default_image?.thumbnail ? `<img src="${esc(p.default_image.thumbnail)}" alt="">` : ""}
         <h3>${esc(p.common_name)}</h3>
         <p class="sci">${esc(p.scientific_name?.[0])}</p>
         <button data-id="${p.id}">View details</button>
       </article>`).join("");
     setMsg("#explore-msg", list.length ? "" : "No plants found. Try another name.");
+    fillImages(list);
   } catch (err) {
     setMsg("#explore-msg", "Could not load plants: " + err.message);
   }
@@ -53,15 +55,24 @@ async function openPlant(id) {
   $("#plant-body").textContent = "Loading...";
   $("#plant-dialog").showModal();
   try {
-    const p = await Api.details(id);
-    const [wiki] = await Promise.allSettled([Api.wiki(p.common_name || p.scientific_name?.[0])]);
+    const item = lastResults.find((x) => String(x.id) === String(id));
+    let p = item;
+    if (!item?.local) {
+      try { p = await Api.details(id); }
+      catch (err) {
+        // 429 etc: fall back to the data we already have from the search list
+        if (!item) throw err;
+        toast("Plant API limit reached: showing basic info");
+      }
+    }
+    const [wiki] = await Promise.allSettled([Api.wiki(p.local ? p.scientific_name[0] : (p.common_name || p.scientific_name?.[0]))]);
     const w = wiki.status === "fulfilled" ? wiki.value : null;
-    currentPlant = p;
+    currentPlant = { ...p, wikiImage: w?.thumbnail?.source };
     $("#plant-body").innerHTML = `
-      ${p.default_image?.regular_url ? `<img src="${esc(p.default_image.regular_url)}" alt="">` : ""}
+      ${(p.default_image?.regular_url ?? w?.thumbnail?.source) ? `<img src="${esc(p.default_image?.regular_url ?? w.thumbnail.source)}" alt="">` : ""}
       <h2>${esc(p.common_name)}</h2>
       <p class="sci">${esc(p.scientific_name?.[0])}</p>
-      <p><b>Sunlight:</b> ${esc(clean(p.sunlight))}<br><b>Watering:</b> ${esc(clean(p.watering))}</p>
+      <p><b>Sunlight:</b> ${esc(clean(p.sunlight))}<br><b>Watering:</b> ${esc(clean(p.watering))}${p.water_every_days ? ` (about every ${p.water_every_days} days)` : ""}</p>
       <p>${esc(w?.extract || (typeof p.description === "string" && !/upgrade/i.test(p.description) ? p.description : "No description available."))}</p>
       ${w?.content_urls ? `<a href="${esc(w.content_urls.desktop.page)}" target="_blank" rel="noopener">Read more on Wikipedia</a>` : ""}
       <button id="add-btn">Add to my garden</button>`;
@@ -77,15 +88,25 @@ $("#plant-body").addEventListener("click", async (e) => {
     await DB.addPlant({
       perenual_id: currentPlant.id,
       name: currentPlant.common_name,
-      image_url: currentPlant.default_image?.thumbnail ?? null,
+      image_url: currentPlant.default_image?.thumbnail ?? currentPlant.wikiImage ?? null,
       sunlight: clean(currentPlant.sunlight),
-      water_every_days: Api.waterDays(currentPlant.watering),
+      water_every_days: currentPlant.water_every_days ?? Api.waterDays(currentPlant.watering),
     });
     $("#plant-dialog").close();
     toast("Added to your garden");
     loadGarden();
   } catch (err) { toast(err.message); }
 });
+
+// Local plants have no photos: load each from Wikipedia (cached in localStorage)
+function fillImages(list) {
+  for (const p of list.filter((x) => x.local)) {
+    Api.wiki(p.scientific_name[0]).then((w) => {
+      const card = document.querySelector(`[data-card="${p.id}"]`);
+      if (w.thumbnail?.source && card) card.insertAdjacentHTML("afterbegin", `<img src="${esc(w.thumbnail.source)}" alt="">`);
+    }).catch(() => {});
+  }
+}
 
 // ---------- Garden ----------
 const daysSince = (date) => Math.floor((Date.now() - new Date(date)) / 864e5);
@@ -160,16 +181,23 @@ $("#auth-btn").addEventListener("click", () => currentUser ? DB.signOut() : $("#
 $("#auth-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const f = new FormData(e.target), up = e.submitter.value === "up";
-  const { error } = up ? await DB.signUp(f.get("email"), f.get("password")) : await DB.signIn(f.get("email"), f.get("password"));
-  if (error) return setMsg("#auth-msg", error.message);
-  setMsg("#auth-msg", "");
-  $("#auth-dialog").close();
-  toast(up ? "Account created. Confirm your email if asked, then sign in." : "Signed in");
+  setMsg("#auth-msg", up ? "Creating account..." : "Signing in...");
+  try {
+    const { data, error } = up
+      ? await DB.signUp(f.get("username"), f.get("password"))
+      : await DB.signIn(f.get("username"), f.get("password"));
+    if (error) throw error;
+    if (data.session) { setMsg("#auth-msg", ""); $("#auth-dialog").close(); toast("Signed in"); }
+    else setMsg("#auth-msg", "Account created, but Supabase still wants email confirmation. Turn off 'Confirm email' in Authentication settings.");
+  } catch (err) {
+    console.error(err);
+    setMsg("#auth-msg", err.message);
+  }
 });
 
 function setUser(user) {
   currentUser = user ?? null;
-  $("#user-email").textContent = currentUser?.email ?? "";
+  $("#user-email").textContent = currentUser?.email.split("@")[0] ?? "";
   $("#auth-btn").textContent = currentUser ? "Sign out" : "Sign in";
   loadGarden();
 }

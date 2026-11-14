@@ -3,13 +3,14 @@ Plant wiki + personal garden. Track: **JavaScript (web)**. Plain HTML/CSS/JS, no
 
 ## Run
 1. Create a free Supabase project, then run `supabase/schema.sql` in the SQL Editor.
-2. (Dev only) Supabase > Authentication > Providers > Email: turn off "Confirm email".
+2. Supabase > Authentication > Providers > Email: turn OFF "Confirm email" (required: usernames use fake emails).
 3. Get a free key at perenual.com/docs/api.
-4. Fill in `js/config.js` (Perenual key, Supabase URL, anon key).
+4. Copy `js/config.example.js` to `js/config.js` and fill it in (Supabase URL + key; Perenual key is optional, only used when a plant isn't in `data/plants.json`). `config.js` is git-ignored, so your keys stay private.
 5. Open `index.html` (or use VS Code "Live Server").
 
 ## Files
-- `js/api.js`: Perenual + Wikipedia fetch, localStorage cache
+- `data/plants.json`: our own plant list (searched first; Perenual is the fallback)
+- `js/api.js`: plant search, Wikipedia fetch, localStorage cache
 - `js/db.js`: Supabase auth and garden queries (SQL)
 - `js/app.js`: DOM rendering, event listeners, reminders
 - `supabase/schema.sql`: tables and Row Level Security

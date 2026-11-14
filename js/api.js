@@ -17,7 +17,15 @@ const Api = {
     return r.json();
   },
 
-  search(q) {
+  // Our own list first (data/plants.json); Perenual only when nothing matches.
+  async search(q) {
+    const term = q.toLowerCase();
+    this.localList ??= await this.getJson("data/plants.json");
+    const hits = this.localList.filter((p) => (p.common_name + " " + p.scientific_name[0]).toLowerCase().includes(term));
+    return hits.length ? hits : this.searchPerenual(q);
+  },
+
+  searchPerenual(q) {
     return this.cached("search:" + q.toLowerCase(), 7 * 864e5, async () =>
       (await this.getJson(`https://perenual.com/api/v2/species-list?key=${CONFIG.PERENUAL_KEY}&q=${encodeURIComponent(q)}`)).data);
   },

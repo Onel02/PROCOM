@@ -41,7 +41,7 @@
 <dialog id="auth-dialog">
   <form id="auth-form" class="stack">
     <h2>Your account</h2>
-    <input name="email" type="email" placeholder="Email" required>
+    <input name="username" type="text" placeholder="Username (3-20 letters, numbers, _)" pattern="[A-Za-z0-9_]{3,20}" autocomplete="username" required>
     <input name="password" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
     <p id="auth-msg" class="msg"></p>
     <div class="row">

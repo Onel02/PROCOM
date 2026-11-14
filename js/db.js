@@ -2,9 +2,12 @@
 // makes sure each user can only touch their own rows.
 const sb = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
 
+// Supabase Auth needs an email, so a username becomes "username@AUTH_DOMAIN" behind the scenes.
+const toEmail = (username) => username.trim().toLowerCase() + "@" + CONFIG.AUTH_DOMAIN;
+
 const DB = {
-  signUp: (email, password) => sb.auth.signUp({ email, password }),
-  signIn: (email, password) => sb.auth.signInWithPassword({ email, password }),
+  signUp: (username, password) => sb.auth.signUp({ email: toEmail(username), password }),
+  signIn: (username, password) => sb.auth.signInWithPassword({ email: toEmail(username), password }),
   signOut: () => sb.auth.signOut(),
 
   async must(query) {
