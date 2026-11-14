@@ -1,39 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Music Finder</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leafwise: plant wiki and personal garden</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>Music Finder</h1>
-    <form id="search-form">
-      <input id="search-input" type="search" placeholder="Search a song or artist" required>
-      <button type="submit">Search</button>
+<header class="top">
+  <h1>Leafwise</h1>
+  <nav>
+    <button data-view="explore" class="active">Explore</button>
+    <button data-view="garden">My garden <span id="due-badge" hidden></span></button>
+  </nav>
+  <div class="row"><span id="user-email"></span>&nbsp;<button id="auth-btn">Sign in</button></div>
+</header>
+
+<main>
+  <section id="view-explore">
+    <form id="search-form" class="row">
+      <input id="q" type="search" placeholder="Search a plant, e.g. monstera" required>
+      <button>Search</button>
     </form>
-    <div id="recent" aria-label="Recent searches"></div>
-  </header>
+    <p id="explore-msg" class="msg"></p>
+    <div id="results" class="grid"></div>
+  </section>
 
-  <main>
-    <p id="status" role="status"></p>
+  <section id="view-garden" hidden>
+    <div class="row"><h2>My garden</h2><button id="notif-btn" class="ghost">Enable reminders</button></div>
+    <p id="garden-msg" class="msg"></p>
+    <div id="garden" class="grid"></div>
+  </section>
+</main>
 
-    <section>
-      <h2>Results</h2>
-      <ul id="results" class="track-list"></ul>
-    </section>
+<dialog id="plant-dialog">
+  <div id="plant-body" class="stack"></div>
+  <form method="dialog"><button class="ghost">Close</button></form>
+</dialog>
 
-    <section>
-      <h2>Favorites</h2>
-      <ul id="favorites" class="track-list"></ul>
-    </section>
-  </main>
+<dialog id="auth-dialog">
+  <form id="auth-form" class="stack">
+    <h2>Your account</h2>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="password" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
+    <p id="auth-msg" class="msg"></p>
+    <div class="row">
+      <button value="in">Sign in</button>
+      <button value="up" class="ghost">Create account</button>
+    </div>
+  </form>
+  <form method="dialog"><button class="ghost">Cancel</button></form>
+</dialog>
 
-  <audio id="player"></audio>
+<div id="toast" role="status"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/db.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
