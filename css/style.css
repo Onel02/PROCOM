@@ -29,3 +29,17 @@ dialog img{max-width:100%;border-radius:6px}
 #toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.5rem 1rem;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Landing + login pages (structure only, decorate later) */
+h1 a{color:inherit;text-decoration:none}
+nav.links a{color:var(--ink);text-decoration:none;padding:.45rem .9rem}
+a.btn{display:inline-block;background:var(--leaf);color:#fff;border-radius:6px;padding:.45rem .9rem;text-decoration:none}
+a.btn.ghost{background:none;color:var(--leaf);border:1px solid var(--leaf)}
+.hero{text-align:center;padding:4rem 1.5rem}
+.hero .logo{font:600 2.5rem Georgia,serif}
+.section{max-width:800px;margin:0 auto;padding:2rem 1.5rem}
+.site-footer{border-top:1px solid var(--line);padding:1.5rem;text-align:center;font-size:.9rem}
+.site-footer p{margin:.2rem 0}
+.auth-box{max-width:380px;margin:3rem auto}
+[hidden]{display:none!important}
+#user-name{opacity:.8}

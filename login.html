@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leafwise: Log in</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <h1><a href="index.html">Leafwise</a></h1>
+  <nav class="links"><a href="index.html">Home</a><a href="app.html">Explore</a></nav>
+</header>
+
+<main class="auth-box">
+  <form id="auth-form" class="stack">
+    <h2>Your account</h2>
+    <input name="username" type="text" placeholder="Username (3-20 letters, numbers, _)" pattern="[A-Za-z0-9_]{3,20}" autocomplete="username" required>
+    <input name="password" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
+    <p id="auth-msg" class="msg"></p>
+    <div class="row">
+      <button value="in">Sign in</button>
+      <button value="up" class="ghost">Create account</button>
+    </div>
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/db.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

@@ -8,56 +8,47 @@
 </head>
 <body>
 <header class="top">
-  <h1>Leafwise</h1>
-  <nav>
-    <button data-view="explore" class="active">Explore</button>
-    <button data-view="garden">My garden <span id="due-badge" hidden></span></button>
+  <h1><a href="index.html">Leafwise</a></h1>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="app.html">Explore</a>
+    <span id="user-name"></span>
+    <a href="login.html" id="auth-link">Log in</a>
   </nav>
-  <div class="row"><span id="user-email"></span>&nbsp;<button id="auth-btn">Sign in</button></div>
 </header>
 
 <main>
-  <section id="view-explore">
-    <form id="search-form" class="row">
-      <input id="q" type="search" placeholder="Search a plant, e.g. monstera" required>
-      <button>Search</button>
-    </form>
-    <p id="explore-msg" class="msg"></p>
-    <div id="results" class="grid"></div>
+  <section class="hero">
+    <!-- TODO: replace the wordmark with the logo image -->
+    <div class="logo">Leafwise</div>
+    <p>Learn about plants, then grow your own garden.</p>
+    <a class="btn" href="app.html">Start exploring</a>
+    <a class="btn ghost" href="login.html" id="hero-login">Log in</a>
   </section>
 
-  <section id="view-garden" hidden>
-    <div class="row"><h2>My garden</h2><button id="notif-btn" class="ghost">Enable reminders</button></div>
-    <p id="garden-msg" class="msg"></p>
-    <div id="garden" class="grid"></div>
+  <section class="section" id="what-we-do">
+    <h2>What we do</h2>
+    <p>Leafwise is a plant encyclopedia with a personal twist. Look up a plant to see how much sun and water it needs, then add it to your own garden. We remind you when it's time to water and let you log how much it has grown.</p>
+  </section>
+
+  <section class="section" id="how-to-use">
+    <h2>How to use</h2>
+    <ol>
+      <li>Search for a plant on the Explore page.</li>
+      <li>Open its details to see sunlight, watering and a short description.</li>
+      <li>Create an account or log in, then add the plant to your garden.</li>
+      <li>Check My garden for watering reminders, and log its height as it grows.</li>
+    </ol>
   </section>
 </main>
 
-<dialog id="plant-dialog">
-  <div id="plant-body" class="stack"></div>
-  <form method="dialog"><button class="ghost">Close</button></form>
-</dialog>
-
-<dialog id="auth-dialog">
-  <form id="auth-form" class="stack">
-    <h2>Your account</h2>
-    <input name="username" type="text" placeholder="Username (3-20 letters, numbers, _)" pattern="[A-Za-z0-9_]{3,20}" autocomplete="username" required>
-    <input name="password" type="password" placeholder="Password (min 6 characters)" minlength="6" required>
-    <p id="auth-msg" class="msg"></p>
-    <div class="row">
-      <button value="in">Sign in</button>
-      <button value="up" class="ghost">Create account</button>
-    </div>
-  </form>
-  <form method="dialog"><button class="ghost">Cancel</button></form>
-</dialog>
-
-<div id="toast" role="status"></div>
-
+<footer class="site-footer">
+  <p>Built by [team member names] for the Coaching 2026 final project.</p>
+  <p>Plant descriptions and photos from Wikipedia (CC BY-SA). Extra plant data from Perenual.</p>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="js/config.js"></script>
-<script src="js/api.js"></script>
 <script src="js/db.js"></script>
-<script src="js/app.js"></script>
+<script src="js/nav.js"></script>
 </body>
 </html>

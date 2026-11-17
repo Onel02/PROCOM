@@ -83,7 +83,7 @@ async function openPlant(id) {
 
 $("#plant-body").addEventListener("click", async (e) => {
   if (e.target.id !== "add-btn") return;
-  if (!currentUser) { $("#plant-dialog").close(); $("#auth-dialog").showModal(); return; }
+  if (!currentUser) { location.href = "login.html"; return; }
   try {
     await DB.addPlant({
       perenual_id: currentPlant.id,
@@ -176,24 +176,7 @@ $("#notif-btn").addEventListener("click", async () => {
 });
 
 // ---------- Auth ----------
-$("#auth-btn").addEventListener("click", () => currentUser ? DB.signOut() : $("#auth-dialog").showModal());
-
-$("#auth-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const f = new FormData(e.target), up = e.submitter.value === "up";
-  setMsg("#auth-msg", up ? "Creating account..." : "Signing in...");
-  try {
-    const { data, error } = up
-      ? await DB.signUp(f.get("username"), f.get("password"))
-      : await DB.signIn(f.get("username"), f.get("password"));
-    if (error) throw error;
-    if (data.session) { setMsg("#auth-msg", ""); $("#auth-dialog").close(); toast("Signed in"); }
-    else setMsg("#auth-msg", "Account created, but Supabase still wants email confirmation. Turn off 'Confirm email' in Authentication settings.");
-  } catch (err) {
-    console.error(err);
-    setMsg("#auth-msg", err.message);
-  }
-});
+$("#auth-btn").addEventListener("click", () => currentUser ? DB.signOut() : (location.href = "login.html"));
 
 function setUser(user) {
   currentUser = user ?? null;
