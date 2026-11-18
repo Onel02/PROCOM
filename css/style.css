@@ -54,7 +54,7 @@ main{max-width:1080px;margin:0 auto;padding:2rem 1.5rem}
 .card.due{border-color:var(--water);box-shadow:0 0 0 1px var(--water)}
 .due-text{color:var(--water)!important;font-weight:600}
 #results .card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgb(0 0 0/.09)}
-#results .card button{margin-top:auto;align-self:flex-start;background:none;color:var(--leaf);padding:0;border:0;transform:none}
+#results .card button{margin-top:auto;align-self:flex-start;background:none;color:var(--leaf);padding:0;border:0;transform:none;filter:none}
 #results .card button::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
 #garden .card button[data-act=water]{margin-top:auto}
 
