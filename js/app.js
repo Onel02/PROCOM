@@ -14,14 +14,19 @@ function toast(text) {
 }
 
 // ---------- Navigation ----------
-function showView(name) {
+const currentView = () => (location.pathname.endsWith("/garden") ? "garden" : "explore");
+
+function showView(name, push = true) {
   for (const v of ["explore", "garden"]) $("#view-" + v).hidden = v !== name;
   document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("active", b.dataset.view === name));
+  const path = name === "garden" ? "/garden" : "/app";
+  if (push && location.pathname !== path) history.pushState(null, "", path);
 }
 document.querySelector("nav").addEventListener("click", (e) => {
   const b = e.target.closest("[data-view]");
   if (b) showView(b.dataset.view);
 });
+window.addEventListener("popstate", () => showView(currentView(), false));
 
 // ---------- Explore: search + details ----------
 const LIGHT_TERMS = { low: ["low"], indirect: ["indirect"], sun: ["full sun"], shade: ["partial shade", "part shade", "part sun"] };
@@ -270,6 +275,7 @@ function setUser(user) {
 }
 
 // ---------- Start ----------
+showView(currentView(), false);
 showRecommended();
 sb.auth.getSession().then(({ data }) => setUser(data.session?.user));
 sb.auth.onAuthStateChange((_event, session) => setUser(session?.user));
