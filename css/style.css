@@ -102,5 +102,10 @@ textarea{width:100%;resize:vertical}
 .chart polyline{fill:none;stroke:var(--leaf);stroke-width:2.5;stroke-linejoin:round}
 .chart circle{fill:var(--card);stroke:var(--leaf);stroke-width:2}
 .chart text{fill:var(--muted);font-size:11px}
+.chart line{stroke:var(--line)}
+.chart .hit{fill:transparent;stroke:none}
+.chart .pt text{opacity:0;fill:var(--ink);font-weight:600;paint-order:stroke;stroke:var(--card);stroke-width:4px;transition:opacity .15s}
+.chart .pt:hover text{opacity:1}
+.chart .pt:hover circle:not(.hit){fill:var(--leaf)}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

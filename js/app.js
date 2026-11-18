@@ -188,17 +188,23 @@ let openId = null;
 // Hand-made SVG line chart of height (cm) per log entry
 function growthChart(logs) {
   if (!logs.length) return '<p class="msg">No height logs yet. Log a height on the plant\'s card to see its growth here.</p>';
-  const W = 400, H = 180, L = 56, R = 16, T = 16, B = 32;
-  const hs = logs.map((l) => Number(l.height_cm));
-  const min = Math.min(...hs), max = Math.max(...hs), span = max - min || 1;
+  const W = 400, H = 180, L = 48, R = 16, T = 20, B = 32;
+  const hs = logs.map((l) => Number(l.height_cm)), max = Math.max(...hs, 1);
+  // Y axis from 0 cm, about 4 even steps of 1, 2 or 5 x 10^n cm (e.g. 0, 5, 10, 15)
+  const raw = max / 4, mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 5, 10].find((m) => m * mag >= raw) * mag;
+  const ticks = Array.from({ length: Math.ceil(max / step) + 1 }, (_, i) => +(i * step).toFixed(2));
   const x = (i) => logs.length === 1 ? (L + W - R) / 2 : L + (i * (W - L - R)) / (logs.length - 1);
-  const y = (h) => H - B - ((h - min) / span) * (H - B - T);
+  const y = (h) => H - B - (h / ticks.at(-1)) * (H - B - T);
+  const grid = ticks.map((t) => `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t} cm</text>`).join("");
   const pts = hs.map((h, i) => `${x(i)},${y(h)}`).join(" ");
-  const dots = logs.map((l, i) => `<circle cx="${x(i)}" cy="${y(hs[i])}" r="4"><title>${esc(l.logged_on)}: ${esc(l.height_cm)} cm</title></circle>`).join("");
+  // Each point: a bigger invisible circle to hover, the dot, and a label shown on hover
+  const dots = logs.map((l, i) => `<g class="pt">
+    <circle class="hit" cx="${x(i)}" cy="${y(hs[i])}" r="12"/><circle cx="${x(i)}" cy="${y(hs[i])}" r="4"/>
+    <text x="${x(i)}" y="${y(hs[i]) - 10}" text-anchor="middle">${esc(l.height_cm)} cm</text>
+    <title>${esc(l.logged_on)}: ${esc(l.height_cm)} cm</title></g>`).join("");
   return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Plant height over time">
-    <polyline points="${pts}"/>${dots}
-    <text x="4" y="${y(max) + 4}">${max} cm</text>
-    ${min !== max ? `<text x="4" y="${y(min) + 4}">${min} cm</text>` : ""}
+    ${grid}<polyline points="${pts}"/>${dots}
     <text x="${L}" y="${H - 8}">${esc(logs[0].logged_on)}</text>
     <text x="${W - R}" y="${H - 8}" text-anchor="end">${esc(logs.at(-1).logged_on)}</text>
   </svg>`;
