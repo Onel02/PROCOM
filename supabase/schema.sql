@@ -6,6 +6,7 @@ create table garden_plants (
   name text not null,
   image_url text,
   sunlight text,
+  note text,
   water_every_days int not null default 7,
   last_watered date not null default current_date,
   created_at timestamptz not null default now()

@@ -43,3 +43,14 @@ a.btn.ghost{background:none;color:var(--leaf);border:1px solid var(--leaf)}
 .auth-box{max-width:380px;margin:3rem auto}
 [hidden]{display:none!important}
 #user-name{opacity:.8}
+.today{background:var(--card);border:2px solid var(--line);border-radius:8px;padding:.8rem 1rem;margin-top:1rem}
+.today.has-due{border-color:var(--water)}
+.today ul{list-style:none;margin:.5rem 0 0;padding:0}
+.today li{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.3rem 0}
+.today small{opacity:.7;margin-left:.4rem}
+select,textarea{padding:.5rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--card);font:inherit;color:inherit}
+textarea{width:100%;resize:vertical}
+.chart{width:100%;height:auto}
+.chart polyline{fill:none;stroke:var(--leaf);stroke-width:2}
+.chart circle{fill:var(--leaf)}
+.chart text{fill:var(--ink);font-size:11px}

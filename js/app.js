@@ -24,27 +24,24 @@ document.querySelector("nav").addEventListener("click", (e) => {
 });
 
 // ---------- Explore: search + details ----------
-$("#search-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const q = $("#q").value.trim();
-  localStorage.setItem("lastQuery", q);
+const LIGHT_TERMS = { low: ["low"], indirect: ["indirect"], sun: ["full sun"], shade: ["partial shade", "part shade", "part sun"] };
+const matchesLight = (p, key) => LIGHT_TERMS[key].some((t) => clean(p.sunlight).toLowerCase().includes(t));
+
+async function runSearch() {
+  const q = $("#q").value.trim(), light = $("#light-filter").value;
+  if (!q && !light) return showRecommended();
   setMsg("#explore-msg", "Searching...");
   try {
-    const list = await Api.search(q);
-    lastResults = list;
-    $("#results").innerHTML = list.map((p) => `
-      <article class="card" data-card="${p.id}">
-        ${p.default_image?.thumbnail ? `<img src="${esc(p.default_image.thumbnail)}" alt="">` : ""}
-        <h3>${esc(p.common_name)}</h3>
-        <p class="sci">${esc(p.scientific_name?.[0])}</p>
-        <button data-id="${p.id}">View details</button>
-      </article>`).join("");
-    setMsg("#explore-msg", list.length ? "" : "No plants found. Try another name.");
-    fillImages(list);
+    let list = q ? await Api.search(q) : await Api.local(); // filter only: browse our whole list
+    if (light) list = list.filter((p) => matchesLight(p, light));
+    showResults(list);
+    setMsg("#explore-msg", list.length ? `${list.length} plant(s)` : "No plants found. Try another name or light level.");
   } catch (err) {
     setMsg("#explore-msg", "Could not load plants: " + err.message);
   }
-});
+}
+$("#search-form").addEventListener("submit", (e) => { e.preventDefault(); runSearch(); });
+$("#light-filter").addEventListener("change", runSearch);
 
 $("#results").addEventListener("click", (e) => {
   const b = e.target.closest("[data-id]");
@@ -98,6 +95,30 @@ $("#plant-body").addEventListener("click", async (e) => {
   } catch (err) { toast(err.message); }
 });
 
+function showResults(list) {
+  lastResults = list;
+  $("#results").innerHTML = list.map((p) => `
+    <article class="card" data-card="${p.id}">
+      ${p.default_image?.thumbnail ? `<img src="${esc(p.default_image.thumbnail)}" alt="">` : ""}
+      <h3>${esc(p.common_name)}</h3>
+      <p class="sci">${esc(p.scientific_name?.[0])}</p>
+      <button data-id="${p.id}">View details</button>
+    </article>`).join("");
+  fillImages(list);
+}
+
+// Explore opens with random picks from our local list (instant, no API call)
+async function showRecommended() {
+  try {
+    const picks = [...(await Api.local())].sort(() => Math.random() - 0.5).slice(0, 8);
+    showResults(picks);
+    setMsg("#explore-msg", "Recommended plants");
+  } catch (err) { setMsg("#explore-msg", "Could not load plants: " + err.message); }
+}
+
+// Clearing the search box brings the recommendations back
+$("#q").addEventListener("input", () => { if (!$("#q").value.trim()) runSearch(); });
+
 // Local plants have no photos: load each from Wikipedia (cached in localStorage)
 function fillImages(list) {
   for (const p of list.filter((x) => x.local)) {
@@ -117,7 +138,7 @@ async function loadGarden() {
   catch (err) { setMsg("#garden-msg", err.message); return; }
   setMsg("#garden-msg", !currentUser ? "Sign in to see your garden." : garden.length ? "" : "Your garden is empty. Find a plant in Explore and add it.");
   $("#garden").innerHTML = garden.map(gardenCard).join("");
-  checkReminders();
+  renderToday();
 }
 
 function gardenCard(g) {
@@ -134,16 +155,16 @@ function gardenCard(g) {
       <form data-act="log" data-id="${g.id}" class="row">
         <input name="h" type="number" step="0.1" min="0" placeholder="Height (cm)" required><button class="ghost">Log</button>
       </form>
-      <button data-act="remove" data-id="${g.id}" class="ghost">Remove</button>
+      <button data-act="details" data-id="${g.id}" class="ghost">Details</button>
     </article>`;
 }
 
-$("#garden").addEventListener("click", async (e) => {
+$("#view-garden").addEventListener("click", async (e) => {
   const b = e.target.closest("button[data-act]");
   if (!b) return;
   try {
+    if (b.dataset.act === "details") return openGardenDialog(b.dataset.id);
     if (b.dataset.act === "water") await DB.markWatered(b.dataset.id);
-    if (b.dataset.act === "remove" && confirm("Remove this plant?")) await DB.removePlant(b.dataset.id);
     loadGarden();
   } catch (err) { toast(err.message); }
 });
@@ -156,24 +177,87 @@ $("#garden").addEventListener("submit", async (e) => {
   } catch (err) { toast(err.message); }
 });
 
-// ---------- Reminders (only work while the site is open in a tab) ----------
-function checkReminders() {
-  const due = garden.filter((g) => daysLeft(g) <= 0);
+// ---------- Garden details popup: chart, note, info, remove ----------
+let openId = null;
+
+// Hand-made SVG line chart of height (cm) per log entry
+function growthChart(logs) {
+  if (!logs.length) return '<p class="msg">No height logs yet. Log a height on the plant\'s card to see its growth here.</p>';
+  const W = 400, H = 180, L = 56, R = 16, T = 16, B = 32;
+  const hs = logs.map((l) => Number(l.height_cm));
+  const min = Math.min(...hs), max = Math.max(...hs), span = max - min || 1;
+  const x = (i) => logs.length === 1 ? (L + W - R) / 2 : L + (i * (W - L - R)) / (logs.length - 1);
+  const y = (h) => H - B - ((h - min) / span) * (H - B - T);
+  const pts = hs.map((h, i) => `${x(i)},${y(h)}`).join(" ");
+  const dots = logs.map((l, i) => `<circle cx="${x(i)}" cy="${y(hs[i])}" r="4"><title>${esc(l.logged_on)}: ${esc(l.height_cm)} cm</title></circle>`).join("");
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Plant height over time">
+    <polyline points="${pts}"/>${dots}
+    <text x="4" y="${y(max) + 4}">${max} cm</text>
+    ${min !== max ? `<text x="4" y="${y(min) + 4}">${min} cm</text>` : ""}
+    <text x="${L}" y="${H - 8}">${esc(logs[0].logged_on)}</text>
+    <text x="${W - R}" y="${H - 8}" text-anchor="end">${esc(logs.at(-1).logged_on)}</text>
+  </svg>`;
+}
+
+function openGardenDialog(id) {
+  const g = garden.find((x) => x.id === id);
+  if (!g) return;
+  openId = id;
+  const logs = [...(g.growth_logs || [])].sort((a, b) => a.logged_on.localeCompare(b.logged_on));
+  const last = logs.at(-1), left = daysLeft(g);
+  $("#garden-body").innerHTML = `
+    ${g.image_url ? `<img src="${esc(g.image_url)}" alt="">` : ""}
+    <h2>${esc(g.name)}</h2>
+    <h3>Growth</h3>
+    ${growthChart(logs)}
+    <p>
+      <b>Sunlight:</b> ${esc(g.sunlight)}<br>
+      <b>Watering:</b> every ${g.water_every_days} days (last: ${esc(g.last_watered)}, ${left <= 0 ? "due now" : `next in ${left} day(s)`})<br>
+      <b>Latest height:</b> ${last ? `${esc(last.height_cm)} cm` : "none logged"} (${logs.length} logs)<br>
+      <b>Added:</b> ${esc(g.created_at.slice(0, 10))}
+    </p>
+    <h3>Note</h3>
+    <textarea id="note-text" rows="3" maxlength="500" placeholder="Where it sits, how it's doing...">${esc(g.note)}</textarea>
+    <p id="dialog-msg" class="msg"></p>
+    <div class="row">
+      <button data-act="save-note">Save note</button>
+      <button data-act="remove" class="ghost">Remove plant</button>
+    </div>`;
+  $("#garden-dialog").showModal();
+}
+
+$("#garden-dialog").addEventListener("click", async (e) => {
+  const b = e.target.closest("button[data-act]");
+  if (!b) return;
+  try {
+    if (b.dataset.act === "save-note") {
+      await DB.saveNote(openId, $("#note-text").value);
+      setMsg("#dialog-msg", "Note saved.");
+      loadGarden();
+    }
+    if (b.dataset.act === "remove" && confirm("Remove this plant from your garden?")) {
+      await DB.removePlant(openId);
+      $("#garden-dialog").close();
+      toast("Plant removed");
+      loadGarden();
+    }
+  } catch (err) { setMsg("#dialog-msg", err.message); }
+});
+
+// ---------- Today list (plants that need water) ----------
+function renderToday() {
+  const due = garden.filter((g) => daysLeft(g) <= 0).sort((a, b) => daysLeft(a) - daysLeft(b));
+  $("#today").hidden = !garden.length;
+  $("#today").classList.toggle("has-due", due.length > 0);
+  $("#today-list").innerHTML = due.length ? due.map((g) => `
+    <li>
+      <span>${esc(g.name)} <small>${daysLeft(g) < 0 ? `${-daysLeft(g)} day(s) overdue` : "due today"}</small></span>
+      <button data-act="water" data-id="${g.id}">Watered</button>
+    </li>`).join("") : "<li>All caught up. Nothing needs water today.</li>";
   $("#due-badge").hidden = !due.length;
   $("#due-badge").textContent = due.length;
-  const key = "notified:" + new Date().toISOString().slice(0, 10);
-  if (due.length && Notification.permission === "granted" && !localStorage.getItem(key)) {
-    localStorage.setItem(key, "1");
-    new Notification("Time to water", { body: due.map((g) => g.name).join(", ") });
-  }
 }
-setInterval(checkReminders, 60 * 60 * 1000);
-
-$("#notif-btn").addEventListener("click", async () => {
-  const result = await Notification.requestPermission();
-  toast(result === "granted" ? "Reminders on" : "Reminders blocked by the browser");
-  checkReminders();
-});
+setInterval(renderToday, 60 * 60 * 1000); // refresh if the page stays open past midnight
 
 // ---------- Auth ----------
 $("#auth-btn").addEventListener("click", () => currentUser ? DB.signOut() : (location.href = "login.html"));
@@ -186,6 +270,6 @@ function setUser(user) {
 }
 
 // ---------- Start ----------
-$("#q").value = localStorage.getItem("lastQuery") || "";
+showRecommended();
 sb.auth.getSession().then(({ data }) => setUser(data.session?.user));
 sb.auth.onAuthStateChange((_event, session) => setUser(session?.user));

@@ -18,6 +18,7 @@ const DB = {
   gardenList: () => DB.must(sb.from("garden_plants").select("*, growth_logs(*)").order("created_at")),
   addPlant: (p) => DB.must(sb.from("garden_plants").insert(p)),
   markWatered: (id) => DB.must(sb.from("garden_plants").update({ last_watered: new Date().toISOString().slice(0, 10) }).eq("id", id)),
+  saveNote: (id, note) => DB.must(sb.from("garden_plants").update({ note }).eq("id", id)),
   removePlant: (id) => DB.must(sb.from("garden_plants").delete().eq("id", id)),
   addLog: (plant_id, height_cm) => DB.must(sb.from("growth_logs").insert({ plant_id, height_cm })),
 };

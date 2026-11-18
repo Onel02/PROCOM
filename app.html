@@ -20,21 +20,37 @@
   <section id="view-explore">
     <form id="search-form" class="row">
       <input id="q" type="search" placeholder="Search a plant, e.g. monstera" required>
-      <button>Search</button>
+      <select id="light-filter" aria-label="Filter by light">
+    <option value="">Any light</option>
+    <option value="low">Low light</option>
+    <option value="indirect">Indirect light</option>
+    <option value="sun">Full sun</option>
+    <option value="shade">Partial shade</option>
+  </select>
+  <button>Search</button>
     </form>
     <p id="explore-msg" class="msg"></p>
     <div id="results" class="grid"></div>
   </section>
 
   <section id="view-garden" hidden>
-    <div class="row"><h2>My garden</h2><button id="notif-btn" class="ghost">Enable reminders</button></div>
+    <h2>My garden</h2>
     <p id="garden-msg" class="msg"></p>
+    <div id="today" class="today" hidden>
+      <h3>Needs water today</h3>
+      <ul id="today-list"></ul>
+    </div>
     <div id="garden" class="grid"></div>
   </section>
 </main>
 
 <dialog id="plant-dialog">
   <div id="plant-body" class="stack"></div>
+  <form method="dialog"><button class="ghost">Close</button></form>
+</dialog>
+
+<dialog id="garden-dialog">
+  <div id="garden-body" class="stack"></div>
   <form method="dialog"><button class="ghost">Close</button></form>
 </dialog>
 

@@ -17,11 +17,12 @@ const Api = {
     return r.json();
   },
 
+  async local() { return (this.localList ??= await this.getJson("data/plants.json")); },
+
   // Our own list first (data/plants.json); Perenual only when nothing matches.
   async search(q) {
     const term = q.toLowerCase();
-    this.localList ??= await this.getJson("data/plants.json");
-    const hits = this.localList.filter((p) => (p.common_name + " " + p.scientific_name[0]).toLowerCase().includes(term));
+    const hits = (await this.local()).filter((p) => (p.common_name + " " + p.scientific_name[0]).toLowerCase().includes(term));
     return hits.length ? hits : this.searchPerenual(q);
   },
 
