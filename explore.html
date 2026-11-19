@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leafwise - Explore Plants</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bpmf+Huninn&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/Leaf.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/guard.js"></script>
+</head>
+<body>
+    <section class="explorepage">
+        <a href="after_login.html" id="backgarden">back ⬅</a>
+        <div class="navmpg">
+            <h1>Explore Plants</h1>
+            <p>Find your next leafy friend</p>
+        </div>
+
+        <form id="explore-form" class="explore-search">
+            <input id="q" class="gd-input" type="search" placeholder="Search a plant, e.g. monstera" autocomplete="off" aria-label="Search a plant">
+            <select id="light-filter" class="gd-input gd-select" aria-label="Filter by light">
+                <option value="">Any light</option>
+                <option value="low">Low light</option>
+                <option value="indirect">Indirect light</option>
+                <option value="sun">Full sun</option>
+                <option value="shade">Partial shade</option>
+            </select>
+            <button class="gd-btn">Search</button>
+        </form>
+        <p id="explore-msg" class="explore-msg"></p>
+
+        <div id="results" class="explore-grid"></div>
+    </section>
+
+    <dialog id="plant-dialog" class="gd-dialog">
+        <div class="gd-head"><h2>Plant details</h2><button class="gd-btn ghost" data-close>Close</button></div>
+        <div id="plant-body"></div>
+    </dialog>
+
+    <div id="gd-toast" class="gd-toast" role="status"></div>
+
+<script src="js/api.js"></script>
+<script src="js/explore.js"></script>
+</body>
+</html>

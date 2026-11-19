@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <a href="before_login.html" id="back">back ⬅</a>
+   <section class="loginpage">
+      <div class="wrapper">
+         <div class="card-switch">
+            <label class="switch">
+               <input type="checkbox" class="toggle">
+               <span class="slider"></span>
+               <span class="card-side"></span>
+               <div class="flip-card__inner">
+                  <div class="flip-card__front">
+                     <div class="title">Log in</div>
+                     <form class="flip-card__form" id="login-form" action="">
+                        <input class="flip-card__input" name="username" placeholder="Username" type="text" autocomplete="username">
+                        <input class="flip-card__input" name="password" placeholder="Password" type="password" autocomplete="current-password">
+                        <button class="flip-card__btn">Let`s go!</button>
+                     </form>
+                  </div>
+                  <div class="flip-card__back">
+                     <div class="title">Sign up</div>
+                     <form class="flip-card__form" id="signup-form" action="">
+                        <input class="flip-card__input" name="username" placeholder="Username" type="text" autocomplete="username">
+                        <input class="flip-card__input" name="password" placeholder="Password" type="password" autocomplete="new-password">
+                        <button class="flip-card__btn">Confirm!</button>
+                     </form>
+                  </div>
+               </div>
+            </label>
+         </div>   
+      </div>
+   </section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/db.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

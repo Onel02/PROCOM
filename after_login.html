@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leafwise - Track Your Plants</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bpmf+Huninn&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/Leaf.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/guard.js"></script>
+</head>
+<body>
+    <section>
+        <section id="top" class="post-home">
+            <header>
+                <nav class="post-nav">
+                    <div class="post-brand">
+                        <img id="post-logo" src="assets/Leaf.png" alt="🍀">
+                        <a id="post-leafwise" href="after_login.html">Leafwise</a>
+                    </div>
+                    <div class="post-nav-links">
+                        <a href="#top">Home</a>
+                        <a href="garden.html">Personal Garden <span id="due-badge" class="due-badge" hidden></span></a>
+                        <a href="explore.html">Explore</a>
+                    </div>
+                    <div class="post-nav-right">
+                        <div
+                        id="user-btn"
+                        aria-label="User menu"
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        tabindex="0"
+                        role="button"
+                        class="user-profile"
+                        >
+                        <div class="user-profile-inner">
+                            <svg
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            >
+                            <g data-name="Layer 2" id="Layer_2">
+                                <path
+                                d="m15.626 11.769a6 6 0 1 0 -7.252 0 9.008 9.008 0 0 0 -5.374 8.231 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 9.008 9.008 0 0 0 -5.374-8.231zm-7.626-4.769a4 4 0 1 1 4 4 4 4 0 0 1 -4-4zm10 14h-12a1 1 0 0 1 -1-1 7 7 0 0 1 14 0 1 1 0 0 1 -1 1z"
+                                ></path>
+                            </g>
+                            </svg>
+                            <p id="username">User</p>
+                        </div>
+                        </div>
+                        <div id="user-menu" class="user-menu" role="menu" hidden>
+                            <p id="user-fullname" class="user-menu-name"></p>
+                            <button id="signout-btn" class="user-menu-btn" role="menuitem">Sign out</button>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <img id="post-moon" src="assets/moon.png" alt="">
+            <div class="post-hero">
+                <p id="post-kicker">✿WELCOME TO✿</p>
+                <h1 id="post-title">My Little Green Corner</h1>
+                <p id="post-subtitle">Learn about your leafy friends, plan your cozy garden, and watch your green corner bloom</p>
+                <button id="post-cta"><strong><a href="garden.html">My Garden</a></strong></button>
+            </div>
+            <img id="post-flower" src="assets/flower1.png" alt="">
+            <div class="post-particles">
+                <div class="post-particle post-p1"></div>
+                <div class="post-particle post-p2"></div>
+                <div class="post-particle post-p3"></div>
+                <div class="post-particle post-p4"></div>
+                <div class="post-particle post-p5"></div>
+                <div class="post-particle post-p6"></div>
+                <div class="post-particle post-p7"></div>
+                <div class="post-particle post-p8"></div>
+                <div class="post-particle post-p9"></div>
+                <div class="post-particle post-p10"></div>
+                <div class="post-particle post-p11"></div>
+                <div class="post-particle post-p12"></div>
+                <div class="post-particle post-p13"></div>
+                <div class="post-particle post-p14"></div>
+                <div class="post-particle post-p15"></div>
+            </div>
+        </section>
+    </section>
+
+<script src="js/session.js"></script>
+</body>
+</html>
