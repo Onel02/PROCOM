@@ -1,4 +1,4 @@
-* /* style awal untk smua */
+* /* default style for all */
 {
     margin: 0px;
     padding: 0px;
@@ -16,7 +16,7 @@ section
 
 }
 
-/*BEFORE LOGIN FILE*/
+/*BEFORE LOGIN*/
 .home 
 {
   background-color: #102D26;
@@ -37,7 +37,7 @@ section
   font-family: "Allura", cursive;
   font-weight: 800;
   text-decoration: none;
-  color: #19493e; /* Base dark green */
+  color: #19493e;
   display: inline-block;
   transition: all 0.2s ease-in-out;
 }
@@ -56,9 +56,9 @@ section
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 25px;
   background-color: #e5cb91;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dbc28c;
   height: 70px;
 }
 
@@ -71,7 +71,8 @@ section
   font-style: normal;
 }
 
-.nav1middle a {
+.nav1middle a 
+{
   display: inline-block;
   text-decoration: none;
   color: #102D26;
@@ -79,7 +80,8 @@ section
   margin: 20px;
 }
 
-.nav1middle a:hover {
+.nav1middle a:hover 
+{
   transform: translateY(-4px) rotate(-3deg);
   color: #2f6f4e;
 }
@@ -87,14 +89,12 @@ section
 .navright
 {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 10px;
 }
 
 #loginnav
 {
-  display: inline-block;
   padding: 8px 18px;
   background-color: #2f6f4e;
   color: #fff;
@@ -109,13 +109,13 @@ section
 {
   background-color: #367e5a;
   transform: translateY(-2px);
-  box-shadow: 0 6px 0px #102D26; /* shadow tall tall */
+  box-shadow: 0 6px 0px #102D26;
 }
   
 #loginnav:active 
 {
   transform: translateY(2px);
-  box-shadow: 0 2px 0px #102D26; /* shadow no tall */
+  box-shadow: 0 2px 0px #102D26; 
 }
 
 #userpict
@@ -127,13 +127,12 @@ section
 
 .homepage
 {
-  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: calc(100vh - 70px);
+  height: calc(100vh - 70px);
   padding-bottom: 15vh;
   animation: floatText 6s ease-in-out infinite;
 
@@ -145,6 +144,7 @@ section
   font-weight: 300; 
 
 }
+
 #ypg
 {
   margin-top: 40px;
@@ -152,6 +152,7 @@ section
   margin-bottom: 10px;
   color: #e5cb91;
 }
+
 #MyGarden
 {
   font-family: "Bpmf Huninn", sans-serif;
@@ -212,7 +213,6 @@ section
   animation: floatParticle 12s infinite linear;
 }
 
-/* Randomizing particle sizes, speeds, and starting positions */
 .p1  { width: 4px; height: 4px; top: 80%; left: 10%; animation-duration: 14s; animation-delay: 0s; }
 .p2  { width: 6px; height: 6px; top: 60%; left: 20%; animation-duration: 11s; animation-delay: 2s; }
 .p3  { width: 3px; height: 3px; top: 90%; left: 30%; animation-duration: 18s; animation-delay: 4s; }
@@ -243,7 +243,7 @@ section
   }
 }
 
-/*PAGE 2 BEFORE LOGIN (belom dipercantik)*/
+/*PAGE 2 BEFORE LOGIN = ABOUT*/
 
 .about 
 {
@@ -335,7 +335,7 @@ div.right
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   border: 2px solid rgba(229, 203, 145, 0.2);
 }
-/*guide page before login*/
+/*PAGE 3 BEFORE LOGIN = GUIDE*/
 .guide
 {
   background-color: #102D26; 
@@ -375,15 +375,6 @@ div.right
   margin: 0;
 }
 
-.guide-divider 
-{
-  color: #e5cb91;
-  font-size: 20px;
-  margin-top: 15px;
-  opacity: 0.7;
-  letter-spacing: 5px;
-}
-
 .stepbystep 
 {
   display: grid;
@@ -391,8 +382,8 @@ div.right
   gap: 40px;
   width: 100%;
   max-width: 1100px;
-  flex: 1; /* Pushes content to center vertically */
-  align-content: center; /* Centers the row of cards vertically */
+  flex: 1;
+  align-content: center;
 }
 
 .step-card 
@@ -409,7 +400,7 @@ div.right
 
 .step-card:hover 
 {
-  transform: translateY(-10px); /* Floats up */
+  transform: translateY(-10px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 203, 145, 0.2);
 }
 
@@ -466,15 +457,12 @@ div.right
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  
   transition: box-shadow ease-in-out 0.4s, background-color ease-in-out 0.3s, color ease-in-out 0.3s, transform ease-in-out 0.1s;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  
-  /* Floating position */
   position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 999;
+  z-index: 3;
 }
 
 #topp:hover 
@@ -482,20 +470,18 @@ div.right
   box-shadow: var(--hover-shadows);
 }
 
-/* Active Animation: Click effect */
 #topp:active 
 {
   box-shadow: var(--hover-shadows), var(--accent) 0px 0px 30px 5px;
   background-color: #102D26;
   color: #e5cb91; 
-  transform: scale(0.9); /* Shrinks slightly when clicked */
+  transform: scale(0.9);
 }
 
-/* From Uiverse.io by StarMarketPros */ 
-/* From Uiverse.io by andrew-demchenk0 */ 
+/*LOGIN PAGE FRON UIVERSE.IO*/
 .loginpage 
 {
-  background-color: #aecfb6;
+  background-color: #27997e;
   height: 100vh; 
   display: flex;
   justify-content: center; 
@@ -597,7 +583,7 @@ div.right
 
 .toggle:checked + .slider 
 {
-  background-color: #2f6f4e; /* Green track when checked */
+  background-color: #2f6f4e;
 }
 
 .toggle:checked + .slider:before 
@@ -614,8 +600,6 @@ div.right
 {
   text-decoration: underline;
 }
-
-/* card */ 
 
 .flip-card__inner 
 {
@@ -648,8 +632,7 @@ div.right
   justify-content: center;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  
-  background: #19493e; /* DARK GREEN LOGIN BOX */
+  background: #19493e;
   gap: 20px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
@@ -689,7 +672,7 @@ div.right
   box-shadow: 4px 4px var(--main-color);
   font-size: 15px;
   font-weight: 600;
-  color: #102D26; /* Dark green typing text */
+  color: #102D26;
   padding: 5px 10px;
   outline: none;
 }
@@ -726,7 +709,7 @@ div.right
   cursor: pointer;
 }
 
-/*BACK BUTTON*/
+/*BACK BUTTON IN LOGIN PAGE (also from uiverse)*/
 
 #back 
 {
@@ -769,192 +752,207 @@ div.right
 }
 
 
-/*after_login.html*/
+/*AFTER LOGIN FILE*/
 
 .post-home 
 {
-background-color: #102D26;
-position: relative;
-overflow: hidden;
+  background-color: #102D26;
+  position: relative;
+  overflow: hidden;
 }
 
 .post-nav 
 {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0px 20px;
-background-color: #e5cb91;
-border-bottom: 1px solid #ddd;
-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  background-color: #e5cb91;
+  border-bottom: 1px solid #ddd;
+  height: 70px;
 }
 
 #post-logo 
 {
-height: 25px;
-width: 25px;
-padding-right: 5px;
+  height: 25px;
+  width: 25px;
+  padding-right: 5px;
 }
 
 #post-leafwise 
 {
-font-size: 40px;
-font-family: "Allura", cursive;
-font-weight: 800;
-text-decoration: none;
-color: #19493e;
-display: inline-block;
-transition: all 0.2s ease-in-out;
+  font-size: 40px;
+  font-family: "Allura", cursive;
+  font-weight: 800;
+  text-decoration: none;
+  color: #19493e;
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
 }
 
 #post-leafwise:hover 
 {
-color: #2f6f4e;
-text-shadow:
-0 0 10px rgba(229, 203, 145, 0.6),
-0 0 20px rgba(47, 111, 78, 0.4);
+  color: #2f6f4e;
+  text-shadow:
+  0 0 10px rgba(229, 203, 145, 0.6),
+  0 0 20px rgba(47, 111, 78, 0.4);
 }
 
 .post-nav-links 
 {
-font-size: 25px;
-font-family: "Cormorant Garamond", serif;
-font-optical-sizing: auto;
-font-weight: 200;
-font-style: normal;
+  font-size: 30px;
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
 }
+
 .post-nav-links a 
 {
-display: inline-block;
-padding: 30px;
-text-decoration: none;
-color: #102D26;
-transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+  display: inline-block;
+  padding: 40px;
+  text-decoration: none;
+  color: #102D26;
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
 }
 
 .post-nav-links a:hover 
 {
-transform: translateY(-4px) rotate(-3deg);
-color: #2f6f4e;
+  transform: translateY(-4px) rotate(-3deg);
+  color: #2f6f4e;
 }
 
 .post-nav-right 
 {
-position: relative; /* the user dropdown is positioned against this */
-display: flex;
-justify-content: space-between;
-align-items: center;
-gap: 10px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-left: 60px;
 }
 
-.post-hero {
-z-index: 2;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-text-align: center;
-min-height: calc(100vh - 70px);
-padding-bottom: 15vh;
-animation: postFloatText 6s ease-in-out infinite;
-}
-.post-hero p {
-font-family: "Cormorant Garamond", serif;
-font-weight: 300;
+.post-hero 
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 70px);
+  padding-bottom: 15vh;
+  animation: postFloatText 6s ease-in-out infinite;
 }
 
-#post-kicker {
-margin-top: 40px;
-font-size: 33px;
-margin-bottom: 10px;
-color: #e5cb91;
+.post-hero p 
+{
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
 }
 
-#post-title {
-font-family: "Bpmf Huninn", sans-serif;
-font-weight: 400;
-font-style: italic;
-font-size: 80px;
-color: #c8d4c0;
-text-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+#post-kicker 
+{
+  margin-top: 40px;
+  font-size: 33px;
+  margin-bottom: 10px;
+  color: #e5cb91;
 }
 
-#post-subtitle {
-font-size: 25px;
-margin-top: 15px;
-color: #c8d4c0;
+#post-title 
+{
+  font-family: "Bpmf Huninn", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 80px;
+  color: #c8d4c0;
+  text-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
 }
 
-#post-cta {
-padding-left: 25px;
-padding-right: 25px;
-padding-bottom: 15px;
-padding-top: 15px;
-margin-top: 40px;
-border-radius: 9px;
-background: #e5cb91;
-border: none;
-font-family: inherit;
-font-weight: 600;
-font-size: 22px;
-color: #102D26;
-text-align: center;
-cursor: pointer;
-transition: 0.4s;
+#post-subtitle 
+{
+  font-size: 25px;
+  margin-top: 15px;
+  color: #c8d4c0;
+  }
+
+/*button my garden from uiverse*/
+#post-cta 
+{
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-top: 40px;
+  border-radius: 9px;
+  background: #e5cb91;
+  border: none;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 22px;
+  color: #102D26;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.4s;
 }
+
 #post-cta a
 {
-text-decoration: none;
-color: #102D26;
+  text-decoration: none;
+  color: #102D26;
 }
+
 #post-cta:hover { box-shadow: 0px 0px 35px 8px rgba(235, 208, 150, 0.5); }
 #post-cta:active {
 transform: scale(0.97);
 box-shadow: 0px 0px 45px 10px rgba(235, 208, 150, 0.7);
 }
 
-#post-flower {
-height: 350px;
-position: absolute;
-bottom: -70px;
-left: -20px;
-transform: rotate(45deg);
+#post-flower 
+{
+  height: 350px;
+  position: absolute;
+  bottom: -70px;
+  left: -20px;
+  transform: rotate(45deg);
 }
 
-@keyframes postFloatText {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-10px); }
+@keyframes postFloatText 
+{
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
-#post-moon {
-height: 100px;
-position: absolute;
-top: 110px;
-right: 60px;
-transform: rotate(25deg);
-filter: drop-shadow(0 0 20px rgba(229, 203, 145, 0.8));
+#post-moon 
+{
+  height: 100px;
+  position: absolute;
+  top: 110px;
+  right: 60px;
+  transform: rotate(25deg);
+  filter: drop-shadow(0 0 20px rgba(229, 203, 145, 0.8));
 }
 
-.post-particles {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-pointer-events: none;
-z-index: 1;
+.post-particles 
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.post-particle {
-position: absolute;
-background-color: #e5cb91;
-border-radius: 50%;
-box-shadow: 0 0 10px #e5cb91, 0 0 20px #e5cb91;
-opacity: 0;
-animation: postFloatParticle 12s infinite linear;
+.post-particle 
+{
+  position: absolute;
+  background-color: #e5cb91;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #e5cb91, 0 0 20px #e5cb91;
+  opacity: 0;
+  animation: postFloatParticle 12s infinite linear;
 }
 
-/* Randomizing particle sizes, speeds, and starting positions */
 .post-p1  { width: 4px; height: 4px; top: 80%; left: 10%; animation-duration: 14s; animation-delay: 0s; }
 .post-p2  { width: 6px; height: 6px; top: 60%; left: 20%; animation-duration: 11s; animation-delay: 2s; }
 .post-p3  { width: 3px; height: 3px; top: 90%; left: 30%; animation-duration: 18s; animation-delay: 4s; }
@@ -971,517 +969,19 @@ animation: postFloatParticle 12s infinite linear;
 .post-p14 { width: 4px; height: 4px; top: 10%; left: 85%; animation-duration: 16s; animation-delay: 5s; }
 .post-p15 { width: 7px; height: 7px; top: 45%; left: 5%;  animation-duration: 12s; animation-delay: 9s; }
 
-@keyframes postFloatParticle {
-0% {
-transform: translateY(0) translateX(0) scale(1);
-opacity: 0;
-}
-10% { opacity: 0.8; }
-90% { opacity: 0.8; }
-100% {
-/* Drifts upwards and slightly right */
-transform: translateY(-150px) translateX(50px) scale(1.5);
-opacity: 0;
-}
-}
-
-/*MY PERSONAL GARDEN PAGE*/
-/*BUTTON ADD PLANTS*/
-
-.sprout-btn {
-  position: relative;
-  padding: 13px 35px;
-  background: transparent; /* Background moved to ::before */
-  font-size: 17px;
-  font-weight: 900;
-  color: #181818;
-  border: none;
-  border-radius: 8px;
-  transition: all .3s ease-in-out;
-  cursor: pointer;
-  margin-left: 50px;
-  overflow: visible;  
-  z-index: 10; /* Establishes stacking context */
-}
-
-/* This draws the yellow box ON TOP of the roots */
-.sprout-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #f5ddb7;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px #18181869, inset 2px 2px 10px #ffffffb0;
-  z-index: 2; /* Sits above the roots (z-index 0) */
-  transition: border-radius .3s ease-in-out;
-}
-
-/* Text sits above the yellow box */
-.sprout-btn span {
- position: relative;
- z-index: 3;
-}
-
-.sprout-btn:hover {
- padding: 13px 30px; 
-}
-.sprout-btn:hover::before {
-  border-radius: 8px 8px 24px 24px;
-}
-
-.icon-1, .icon-2, .icon-3, .icon-4, .icon-5 {
- position: absolute;
- top: 10%;
- left: 50%;
- transform: translate(-50%, 0);
- width: 0px; /* Hidden by default */
- height: auto;
- transition: all .5s ease-in-out;
- 
- /* z-index: 5 ensures they are ABOVE the button background, but BELOW the text */
- z-index: 5; 
-}
-
-.sprout-btn:hover {
- padding: 13px 30px; 
- border-radius: 8px 8px 24px 24px;
-}
-
-.sprout-btn:hover .icon-1 {
- top: -250%;
- left: 50%;
- transform: translate(-50%, 0);
- width: 50px;
- height: auto;
- animation: inIcon1 1s ease .45s forwards;
-}
-
-.sprout-btn:hover .icon-2 {
- top: -200%;
- left: 90%;
- transform: translate(-50%, 0);
- width: 75px;
- height: auto;
- animation: inIcon2 1s ease .45s forwards;
-}
-
-.sprout-btn:hover .icon-3 {
- top: -160%;
- left: 20%;
- transform: translate(-50%, 0);
- width: 60px;
- height: auto;
- animation: inIcon3 1s ease .45s forwards;
-}
-
-.sprout-btn:hover .icon-4 {
- top: -340%;
- left: 10%;
- transform: translate(-50%, 0);
- width: 85px;
- height: auto;
- animation: inIcon4 1s ease .45s forwards;
-}
-
-.sprout-btn:hover .icon-5 {
- top: -350%;
- left: 90%;
- transform: translate(-50%, 0);
- width: 85px;
- height: auto;
- animation: inIcon5 1s ease .45s forwards;
-}
-
-@keyframes inIcon1 {
- 0% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
- 25% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(5deg);
- }
- 50% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(1deg);
- }
- 65% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(3deg);
- }
- 100% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
-}
-
-@keyframes inIcon2 {
- 0% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
- 35% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(10deg);
- }
- 50% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(4deg);
- }
- 80% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(5deg);
- }
- 100% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
-}
-
-@keyframes inIcon3 {
- 0% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
- 35% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(-2deg);
- }
- 100% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
-}
-
-@keyframes inIcon4 {
- 0% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
- 40% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(-3deg);
- }
- 100% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
-}
-
-@keyframes inIcon5 {
- 0% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
- 35% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(-3deg);
- }
- 100% {
-   transform-origin: 0 100%;
-   transform: translate(-50%, 0) rotate(0deg);
- }
-}
-
-
-.fil-leaf-1 { fill: #7B9B3A; }
-.fil-leaf-2 { fill: #556729; fill-rule: nonzero; }
-.fil-leaf-3 { fill: #556729; }
-.fil-leaf-4 { fill: #3C4819; }
-.fil-leaf-5 { fill: #3C4819; }
-
-.root-1, .root-2, .root-3, .root-4, .root-5 {
-  position: absolute;
-  bottom: 0%; 
-  left: 50%;
-  transform: translate(-50%, 0) rotate(0deg);
-  width: 0px; 
-  height: auto;
-  transition: all .5s ease-in-out;
-  z-index: 0; /* Puts roots behind the ::before background */
-  transform-origin: top center; 
-}
-
-
-.sprout-btn:hover .root-1 {
-  bottom: -180%; 
-  left: 20%; 
-  width: 35px;
-  animation: swayRightFar 1.6s ease-out forwards;
-}
-.sprout-btn:hover .root-2 {
-  bottom: -220%;
-  left: 35%; 
-  width: 40px;
-  animation: swayRight 1.7s ease-out forwards;
-}
-.sprout-btn:hover .root-3 {
-  bottom: -200%;
-  left: 50%; 
-  width: 38px;
-  animation: swayCenter 1.5s ease-out forwards;
-}
-.sprout-btn:hover .root-4 {
-  bottom: -210%;
-  left: 65%; 
-  width: 42px;
-  animation: swayLeft 1.8s ease-out forwards;
-}
-.sprout-btn:hover .root-5 {
-  bottom: -200%;
-  left: 80%; 
-  width: 35px;
-  animation: swayLeftFar 1.9s ease-out forwards;
-}
-
-@keyframes swayLeftFar {
-  0% { transform: translate(-50%, 0) rotate(0deg); }
-  100% { transform: translate(-50%, 0) rotate(-12deg); }
-}
-@keyframes swayLeft {
-  0% { transform: translate(-50%, 0) rotate(0deg); }
-  100% { transform: translate(-50%, 0) rotate(-6deg); }
-}
-@keyframes swayCenter {
-  0% { transform: translate(-50%, 0) rotate(0deg); }
-  100% { transform: translate(-50%, 0) rotate(3deg); }
-}
-@keyframes swayRight {
-  0% { transform: translate(-50%, 0) rotate(0deg); }
-  100% { transform: translate(-50%, 0) rotate(7deg); }
-}
-@keyframes swayRightFar {
-  0% { transform: translate(-50%, 0) rotate(0deg); }
-  100% { transform: translate(-50%, 0) rotate(14deg); }
-}
-.gardenn
+@keyframes postFloatParticle 
 {
-  background-color: #2ba085;
-  min-height: 100vh;
-}
-.gardenn,
-.explorepage { height: auto; }
-
-#backgarden {
-  /* Theme Colors */
-  --hover-glow: 0px 0px 20px 4px rgba(229, 203, 145, 0.6); /* Soft yellow glow */
-  --bg-color: #294936; /* Warm cream to match your page */
-  --text-color: #e5cb91; /* Deep green */
-  
-  font-family: "Cormorant Garamond", serif; /* Matches your site's elegant font */
-  font-weight: 700;
-  font-size: 18px; 
-  padding: 10px 22px;
-  
-  /* Pill Shape */
-  border-radius: 999px; 
-  
-  /* Borders and Shadows (Earthy, hand-drawn feel) */
-  border: 2px solid #e5cb91;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  box-shadow: 3px 3px 0px #e6cb92d2; /* Solid block shadow */
-  
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px; /* Space between text and arrow */
-  text-decoration: none;
-  
-  /* Smooth animations */
-  transition: all 0.3s ease;
-  
-  /* Floating position */
-  position: fixed;
-  top: 30px;
-  left: 30px;
-  z-index: 999;
-}
-
-/* Hover Animation: Glows yellow and lifts up */
-#backgarden:hover {
-  box-shadow: var(--hover-glow), 4px 4px 0px #102D26; /* Keeps the solid shadow, adds glow */
-  background-color: #e5cb91; /* Changes to soft yellow */
-  color: #294936;
-  transform: translateY(-2px); /* Lifts up slightly */
-}
-
-/* Active Animation: Click effect */
-#backgarden:active {
-  box-shadow: 0px 0px 0px #102D26; /* Shadow disappears */
-  background-color: #c9dabe; /* Soft green */
-  transform: translate(3px, 3px); /* Pushes down into the page */
-}
-
-.navmpg
-{
-  background-color: #2ba085;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 40px;
-
-}
-.navmpg h1
-{
-  margin-bottom: 20px;
-  font-family: "Cormorant Garamond", serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: italic;
-  color: #e5cb91;
-  font-size: 60px;
-}
-.navmpg p
-{
-  font-family: "Bpmf Huninn", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 30px;
-}
-
-.myplants
-{
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  align-items: center;
-
-}
-.flip-card {
-  background-color: transparent;
-  width: 190px;
-  height: 254px;
-  perspective: 1000px;
-  font-family: "Bpmf Huninn", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 30px;
-  margin-left: 50px;
-}
-
-.title {
-  font-size: 1.5em;
-  font-weight: 900;
-  text-align: center;
-  margin: 0;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, .flip-card-back {
-  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border: 2px solid #e5cb91;
-  border-radius: 1rem;
-}
-
-.flip-card-front {
-    background: linear-gradient(120deg, rgb(74, 161, 125) 30%, rgb(101, 160, 101) 88%,
-     rgb(127, 196, 153) 40%, #e5cb91 78%);
-  color: #e5cb91;
-
-}
-
-.flip-card-back {
-  background: linear-gradient(120deg, #48633f 50%, #294936 88%,
-     rgb(255, 211, 195) 40%, rgb(101, 160, 101) 48%);
-  color: #e5cb91;
-  transform: rotateY(180deg);
-}
-
-.deleteplant
-{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.deleteplant p
-{
-  
-  margin-top: 20px;
-  margin-bottom: 20px;
-  color: #e5cb91;
-}
-
-.btn {
-  width: 120px;
-  height: 40px;
-  border-radius: 5px;
-  border: none;
-  transition: all 0.5s ease-in-out;
-  font-size: 15px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-weight: 600;  
-  background: #294936;
-  color: #f5f5f5;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  
-  overflow: hidden; 
-  position: relative; /* Ensures the absolute icon stays relative to the button */
-}
-
-.btn:hover {
-  box-shadow: 0 0 20px 0px #2e2e2e3a;
-}
-
-.btn .icon {
-  position: absolute;
-  left: 0; 
-  height: 40px;
-  width: 40px;
-  transition: all 0.5s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn .text {
-  transform: translateX(12px); 
-  transition: all 0.5s;
-}
-
-.btn:hover .icon {
-  /* Set this to exactly match the button width */
-  width: 120px; 
-}
-
-.btn:hover .text {
+  0% {
+  transform: translateY(0) translateX(0) scale(1);
   opacity: 0;
-}
+  }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% {
 
-.btn:focus {
-  outline: none;
-}
-
-.btn:active .icon {
-  transform: scale(0.85);
+  transform: translateY(-150px) translateX(50px) scale(1.5);
+  opacity: 0;
+  }
 }
 
 /*USER DROPDOWN (after login)*/
@@ -1532,10 +1032,525 @@ opacity: 0;
 .user-menu-btn:focus-visible { background: #c9dabe; outline: none; }
 .user-menu-btn:active { transform: scale(0.97); }
 
-/*GARDEN: plant cards, popups and nav badge (cards are drawn by js/garden.js)*/
+/*MY PERSONAL GARDEN PAGE*/
+/*BUTTON ADD PLANTS (from uiverse but revised manually with ai*/
 
+.sprout-btn 
+{
+  position: relative;
+  padding: 13px 35px;
+  background: transparent; 
+  font-size: 17px;
+  font-weight: 900;
+  color: #181818;
+  border: none;
+  border-radius: 8px;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+  margin-left: 50px;
+  overflow: visible;  
+  z-index: 10; 
+}
+
+.sprout-btn::before 
+{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #f5ddb7;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px #18181869, inset 2px 2px 10px #ffffffb0;
+  z-index: 2; 
+  transition: border-radius .3s ease-in-out;
+}
+
+.sprout-btn span 
+{
+  position: relative;
+  z-index: 3;
+}
+
+.sprout-btn:hover::before 
+{
+  padding: 13px 30px; 
+  border-radius: 8px 8px 24px 24px;
+}
+
+.icon-1, .icon-2, .icon-3, .icon-4, .icon-5 
+{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 0px; 
+  height: auto;
+  transition: all .5s ease-in-out;
+  z-index: 5; 
+}
+
+.sprout-btn:hover .icon-1 
+{
+  top: -250%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 50px;
+  height: auto;
+  animation: inIcon1 1s ease .45s forwards;
+}
+
+.sprout-btn:hover .icon-2 
+{
+  top: -200%;
+  left: 90%;
+  transform: translate(-50%, 0);
+  width: 75px;
+  height: auto;
+  animation: inIcon2 1s ease .45s forwards;
+}
+
+.sprout-btn:hover .icon-3 
+{
+ top: -160%;
+ left: 20%;
+ transform: translate(-50%, 0);
+ width: 60px;
+ height: auto;
+ animation: inIcon3 1s ease .45s forwards;
+}
+
+.sprout-btn:hover .icon-4 
+{
+  top: -340%;
+  left: 10%;
+  transform: translate(-50%, 0);
+  width: 85px;
+  height: auto;
+  animation: inIcon4 1s ease .45s forwards;
+}
+
+.sprout-btn:hover .icon-5 
+{
+  top: -350%;
+  left: 90%;
+  transform: translate(-50%, 0);
+  width: 85px;
+  height: auto;
+  animation: inIcon5 1s ease .45s forwards;
+}
+
+@keyframes inIcon1 
+{
+ 0% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+ 25% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(5deg);
+ }
+ 50% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(1deg);
+ }
+ 65% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(3deg);
+ }
+ 100% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+}
+
+@keyframes inIcon2 
+{
+ 0% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+ 35% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(10deg);
+ }
+ 50% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(4deg);
+ }
+ 80% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(5deg);
+ }
+ 100% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+}
+
+@keyframes inIcon3 
+{
+ 0% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+ 35% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(-2deg);
+ }
+ 100% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+}
+
+@keyframes inIcon4 
+{
+ 0% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+ 40% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(-3deg);
+ }
+ 100% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+}
+
+@keyframes inIcon5 
+{
+ 0% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+ 35% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(-3deg);
+ }
+ 100% {
+   transform-origin: 0 100%;
+   transform: translate(-50%, 0) rotate(0deg);
+ }
+}
+
+.fil-leaf-1 { fill: #7B9B3A; }
+.fil-leaf-2 { fill: #556729; fill-rule: nonzero; }
+.fil-leaf-3 { fill: #556729; }
+.fil-leaf-4 { fill: #3C4819; }
+.fil-leaf-5 { fill: #3C4819; }
+
+.root-1, .root-2, .root-3, .root-4, .root-5 
+{
+  position: absolute;
+  bottom: 0%; 
+  left: 50%;
+  transform: translate(-50%, 0) rotate(0deg);
+  width: 0px; 
+  height: auto;
+  transition: all .5s ease-in-out;
+  z-index: 0;
+  transform-origin: top center; 
+}
+
+.sprout-btn:hover .root-1 
+{
+  bottom: -180%; 
+  left: 20%; 
+  width: 35px;
+  animation: swayRightFar 1.6s ease-out forwards;
+}
+.sprout-btn:hover .root-2 
+{
+  bottom: -220%;
+  left: 35%; 
+  width: 40px;
+  animation: swayRight 1.7s ease-out forwards;
+}
+.sprout-btn:hover .root-3 
+{
+  bottom: -200%;
+  left: 50%; 
+  width: 38px;
+  animation: swayCenter 1.5s ease-out forwards;
+}
+.sprout-btn:hover .root-4 
+{
+  bottom: -210%;
+  left: 65%; 
+  width: 42px;
+  animation: swayLeft 1.8s ease-out forwards;
+}
+.sprout-btn:hover .root-5 
+{
+  bottom: -200%;
+  left: 80%; 
+  width: 35px;
+  animation: swayLeftFar 1.9s ease-out forwards;
+}
+
+@keyframes swayLeftFar 
+{
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(-12deg); }
+}
+@keyframes swayLeft 
+{
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(-6deg); }
+}
+@keyframes swayCenter 
+{
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(3deg); }
+}
+@keyframes swayRight 
+{
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(7deg); }
+}
+@keyframes swayRightFar 
+{
+  0% { transform: translate(-50%, 0) rotate(0deg); }
+  100% { transform: translate(-50%, 0) rotate(14deg); }
+}
+
+.gardenn
+{
+  background-color: #155a4a;
+  min-height: 100vh;
+}
+.gardenn,.explorepage { height: auto; }
+
+#backgarden {
+  --hover-glow: 0px 0px 20px 4px rgba(229, 203, 145, 0.6); 
+  --bg-color: #294936; 
+  --text-color: #e5cb91; 
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 700;
+  font-size: 18px; 
+  padding: 10px 22px;
+  border-radius: 999px; 
+  border: 2px solid #e5cb91;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-shadow: 3px 3px 0px #e6cb92d2;  
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  z-index: 999;
+}
+
+#backgarden:hover {
+  box-shadow: var(--hover-glow), 4px 4px 0px #102D26;
+  background-color: #e5cb91; 
+  color: #294936;
+  transform: translateY(-2px); 
+}
+
+#backgarden:active {
+  box-shadow: 0px 0px 0px #102D26; 
+  background-color: #c9dabe;
+  transform: translate(3px, 3px);
+}
+
+.navmpg
+{
+  background-color: #155a4a;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+
+}
+.navmpg h1
+{
+  margin-bottom: 20px;
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: italic;
+  color: #e5cb91;
+  font-size: 60px;
+}
+.navmpg p
+{
+  font-family: "Bpmf Huninn", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  color: #aecfb6;
+}
+
+.myplants
+{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: center;
+
+}
+/*card fronm uiverse, n edited*/
+.flip-card 
+{
+  background-color: transparent;
+  width: 190px;
+  height: 254px;
+  perspective: 1000px;
+  font-family: "Bpmf Huninn", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+.title 
+{
+  font-size: 1.5em;
+  font-weight: 900;
+  text-align: center;
+  margin: 0;
+}
+
+.flip-card-inner 
+{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner 
+{
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back 
+{
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border: 2px solid #e5cb91;
+  border-radius: 1rem;
+}
+
+.flip-card-front 
+{
+    background: linear-gradient(120deg, rgb(74, 161, 125) 30%, rgb(101, 160, 101) 88%,
+     rgb(127, 196, 153) 40%, #e5cb91 78%);
+  color: #e5cb91;
+
+}
+
+.flip-card-back 
+{
+  background: linear-gradient(120deg, #48633f 50%, #294936 88%,
+     rgb(255, 211, 195) 40%, rgb(101, 160, 101) 48%);
+  color: #e5cb91;
+  transform: rotateY(180deg);
+}
+
+.deleteplant
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.deleteplant p
+{
+  
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #e5cb91;
+}
+
+.btn 
+{
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  transition: all 0.5s ease-in-out;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;  
+  background: #294936;
+  color: #f5f5f5;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; 
+  position: relative;
+}
+
+.btn:hover 
+{
+  box-shadow: 0 0 20px 0px #2e2e2e3a;
+}
+
+.btn .icon 
+{
+  position: absolute;
+  left: 0; 
+  height: 40px;
+  width: 40px;
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn .text 
+{
+  transform: translateX(12px); 
+  transition: all 0.5s;
+}
+
+.btn:hover .icon 
+{
+  width: 120px; 
+}
+
+.btn:hover .text 
+{
+  opacity: 0;
+}
+
+.btn:focus 
+{
+  outline: none;
+}
+
+.btn:active .icon 
+{
+  transform: scale(0.85);
+}
+
+/*GARDEN: plant cards, popups and nav badge (cards are drawn by js/garden.js)*/
 /* Row of plants: Add button first, then newest -> oldest. A full row wraps the oldest plants down. */
-.myplants {
+.myplants 
+{
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -1543,9 +1558,10 @@ opacity: 0;
   gap: 40px 0;
   padding: 0 50px 60px 0;
 }
-.myplants .sprout-btn { margin-top: 100px; } /* lines the button up with the middle of the card photos */
+.myplants .sprout-btn { margin-top: 100px; }
 
-.plant {
+.plant 
+{
   width: 190px;
   margin-left: 50px;
   display: flex;
@@ -1555,15 +1571,14 @@ opacity: 0;
 }
 .plant .flip-card { margin-left: 0; font-size: 17px; }
 
-/* Front = photo, or a leaf placeholder */
 .plant-photo { width: 100%; height: 100%; object-fit: cover; border-radius: calc(1rem - 2px); }
 .plant-leaf { width: 90px; margin: auto; opacity: 0.85; }
 
-/* Back = infos + Growth log button */
 .plant .flip-card-back { padding: 12px; gap: 6px; align-items: center; }
 .plant .flip-card-back .title { font-size: 1.25em; margin-bottom: 2px; }
 .plant-info { margin: 0; font-size: 13px; line-height: 1.25; text-align: center; }
-.plant-info b {
+.plant-info b 
+{
   display: block;
   font-size: 11px;
   font-weight: 600;
@@ -1572,10 +1587,10 @@ opacity: 0;
   color: #c9dabe;
 }
 
-/* Under the card: name, water status, Watered today, Delete */
 .plant .deleteplant { width: 100%; }
 .plant .deleteplant .plant-name { margin: 16px 0 6px; font-size: 24px; line-height: 1.15; text-align: center; }
-.plant .deleteplant .water-status {
+.plant .deleteplant .water-status 
+{
   margin: 0 0 12px;
   padding: 3px 12px;
   border-radius: 999px;
@@ -1585,19 +1600,18 @@ opacity: 0;
 }
 .plant .deleteplant .gd-btn { margin-bottom: 10px; }
 
-/* Needs water: glowing card + yellow status */
 .plant.due .flip-card-front,
 .plant.due .flip-card-back { box-shadow: 0 0 0 3px #ffe27a, 0 0 22px 6px rgba(255, 226, 122, 0.75); }
 .plant.due .deleteplant .water-status { background: #102D26; color: #ffe27a; font-weight: 700; }
 
-/* Touch screens have no hover: a tap flips the card instead */
-@media (hover: none) {
+@media (hover: none) 
+{
   .plant .flip-card:hover .flip-card-inner { transform: none; }
   .plant .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
 }
 
-/* Buttons used on the cards and in the popups */
-.gd-btn {
+.gd-btn 
+{
   min-width: 140px;
   height: 36px;
   padding: 0 14px;
@@ -1615,9 +1629,8 @@ opacity: 0;
 .gd-btn.ghost { min-width: 0; background: transparent; border-color: #e5cb91; box-shadow: none; color: #e5cb91; }
 .gd-btn.ghost:hover { background: rgba(229, 203, 145, 0.15); }
 
-/* Popups (Add a plant, Growth log) */
 .gd-dialog {
-  margin: auto; /* the page's * { margin: 0 } would otherwise pin the popup to the top-left corner */
+  margin: auto; 
   width: min(560px, calc(100% - 2rem));
   max-height: 85vh;
   overflow: auto;
@@ -1634,7 +1647,8 @@ opacity: 0;
 .gd-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
 .gd-head h2 { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 30px; color: #e5cb91; }
 .gd-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.gd-input {
+.gd-input 
+{
   flex: 1;
   min-width: 0;
   height: 38px;
@@ -1648,7 +1662,8 @@ opacity: 0;
 .gd-select { flex: 0 0 auto; }
 .gd-msg { min-height: 1.4em; margin: 10px 0 0; font-size: 15px; }
 .gd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 12px; }
-.gd-card {
+.gd-card 
+{
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1668,7 +1683,8 @@ opacity: 0;
 .gd-name { font-size: 24px; color: #e5cb91; }
 .gd-chart { display: block; width: 100%; height: auto; }
 
-.gd-toast {
+.gd-toast 
+{
   position: fixed;
   bottom: 24px;
   left: 50%;
@@ -1704,16 +1720,17 @@ opacity: 0;
 .due-badge[hidden] { display: none; }
 
 /*EXPLORE PAGE (paste below the GARDEN block; it reuses .plant, .gd-btn, .gd-input and .gd-dialog from there)*/
-.explorepage { background-color: #2ba085; min-height: 100vh; }
+.explorepage { background-color: #155a4a; min-height: 100vh; }
 
 .explore-search { display: flex; flex-wrap: wrap; gap: 8px; max-width: 640px; margin: 0 auto; padding: 0 20px; }
-.explore-msg {
+.explore-msg 
+{
   min-height: 1.5em;
   margin: 14px 0 34px;
   text-align: center;
   font-family: "Bpmf Huninn", sans-serif;
   font-size: 18px;
-  color: #102D26;
+  color: #e5cb91;
 }
 
 .explore-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px 50px; padding: 0 50px 80px; }
