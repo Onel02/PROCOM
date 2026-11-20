@@ -1,3 +1,5 @@
 {
-  "rewrites": [{ "source": "/garden", "destination": "/app.html" }]
-}
+    "rewrites": [
+      { "source": "/", "destination": "/before_login.html" }
+    ]
+  }

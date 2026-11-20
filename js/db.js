@@ -10,6 +10,11 @@ const DB = {
   signIn: (username, password) => sb.auth.signInWithPassword({ email: toEmail(username), password }),
   signOut: () => sb.auth.signOut(),
 
+  // Same date maths as the original app: dates are YYYY-MM-DD and counted in UTC (like the database's current_date).
+  today: () => new Date().toISOString().slice(0, 10),
+  // Days until the plant needs water: 0 = today, negative = overdue.
+  daysLeft: (g) => g.water_every_days - Math.floor((Date.now() - new Date(g.last_watered)) / 864e5),
+
   async must(query) {
     const { data, error } = await query;
     if (error) throw new Error(error.message);
@@ -17,8 +22,13 @@ const DB = {
   },
   gardenList: () => DB.must(sb.from("garden_plants").select("*, growth_logs(*)").order("created_at")),
   addPlant: (p) => DB.must(sb.from("garden_plants").insert(p)),
-  markWatered: (id) => DB.must(sb.from("garden_plants").update({ last_watered: new Date().toISOString().slice(0, 10) }).eq("id", id)),
+  markWatered: (id) => DB.must(sb.from("garden_plants").update({ last_watered: DB.today() }).eq("id", id)),
   saveNote: (id, note) => DB.must(sb.from("garden_plants").update({ note }).eq("id", id)),
   removePlant: (id) => DB.must(sb.from("garden_plants").delete().eq("id", id)),
   addLog: (plant_id, height_cm) => DB.must(sb.from("growth_logs").insert({ plant_id, height_cm })),
+  // How many plants need water today (for the badge in the nav)
+  async dueCount() {
+    const rows = await DB.must(sb.from("garden_plants").select("water_every_days, last_watered"));
+    return rows.filter((g) => DB.daysLeft(g) <= 0).length;
+  },
 };
