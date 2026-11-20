@@ -155,6 +155,7 @@ plantsEl.addEventListener("click", async (e) => {
   }
   const g = garden.find((x) => x.id === b.dataset.id);
   if (!g) return;
+  if (b.dataset.act !== "log") b.disabled = true; // no double clicks while we wait for the database
   try {
     if (b.dataset.act === "log") openLog(g);
     if (b.dataset.act === "water") {
@@ -169,6 +170,7 @@ plantsEl.addEventListener("click", async (e) => {
       toast("Plant removed");
     }
   } catch (err) { toast(err.message); }
+  finally { b.disabled = false; }
 });
 
 // ---------- Growth log popup ----------
@@ -236,16 +238,20 @@ addBtn.addEventListener("click", () => {
   if (!$("#add-results").children.length) showRecommended();
 });
 
+// Newest search wins: a slower, older search must not overwrite the results of a newer one.
+let searchId = 0;
 async function runSearch() {
   const q = $("#add-q").value.trim(), light = $("#add-light").value;
+  const id = ++searchId;
   if (!q && !light) return showRecommended();
   addMsg("Searching...");
   try {
     let list = q ? await Api.search(q) : await Api.local(); // filter only: browse our whole list
+    if (id !== searchId) return; // a newer search started while we waited
     if (light) list = list.filter((p) => matchesLight(p, light));
     showResults(list);
     addMsg(list.length ? plural(list.length, "plant") : "No plants found. Try another name or light level.");
-  } catch (err) { addMsg("Could not load plants: " + err.message); }
+  } catch (err) { if (id === searchId) addMsg("Could not load plants: " + err.message); }
 }
 $("#add-form").addEventListener("submit", (e) => { e.preventDefault(); runSearch(); });
 $("#add-light").addEventListener("change", runSearch);
@@ -254,7 +260,7 @@ $("#add-q").addEventListener("input", () => { if (!$("#add-q").value.trim()) run
 // Random picks from our local list (instant, no API call)
 async function showRecommended() {
   try {
-    const picks = [...(await Api.local())].sort(() => Math.random() - 0.5).slice(0, 8);
+    const picks = Api.shuffle(await Api.local()).slice(0, 8);
     showResults(picks);
     addMsg("Recommended plants");
   } catch (err) { addMsg("Could not load plants: " + err.message); }
@@ -309,6 +315,8 @@ async function openPlant(id) {
     const [wiki] = await Promise.allSettled([title ? Api.wiki(title) : Promise.reject(new Error("no title"))]);
     const w = wiki.status === "fulfilled" ? wiki.value : null;
     currentPlant = { ...p, wikiImage: w?.thumbnail?.source };
+    // Duplicates are allowed: suggest a free name ("Monstera 2") that the person can edit
+    const suggested = DB.nextName((p.common_name || p.scientific_name?.[0] || "Unnamed plant").slice(0, 50), garden.map((g) => g.name));
     const photo = p.default_image?.regular_url ?? w?.thumbnail?.source;
     const desc = w?.extract || (typeof p.description === "string" && !/upgrade/i.test(p.description) ? p.description : "No description available.");
     box.innerHTML = `
@@ -319,6 +327,7 @@ async function openPlant(id) {
       <p>${esc(desc)}</p>
       ${w?.content_urls ? `<p><a href="${esc(w.content_urls.desktop.page)}" target="_blank" rel="noopener">Read more on Wikipedia</a></p>` : ""}
       <p id="details-msg" class="gd-msg">${esc(notice)}</p>
+      <div class="gd-row"><input id="plant-name" class="gd-input" maxlength="60" value="${esc(suggested)}" placeholder="Name in your garden" aria-label="Name in your garden"></div>
       <div class="gd-row">
         <button class="gd-btn ghost" data-back>Back to results</button>
         <button class="gd-btn" data-add>Add to my garden</button>
@@ -336,7 +345,7 @@ $("#add-details").addEventListener("click", async (e) => {
   try {
     await DB.addPlant({
       perenual_id: currentPlant.id,
-      name: currentPlant.common_name || currentPlant.scientific_name?.[0] || "Unnamed plant",
+      name: ($("#plant-name")?.value.trim() || currentPlant.common_name || currentPlant.scientific_name?.[0] || "Unnamed plant").slice(0, 60),
       image_url: currentPlant.default_image?.thumbnail ?? currentPlant.wikiImage ?? null,
       sunlight: clean(currentPlant.sunlight),
       water_every_days: currentPlant.water_every_days ?? Api.waterDays(currentPlant.watering),

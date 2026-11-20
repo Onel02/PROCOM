@@ -29,17 +29,21 @@ document.addEventListener("click", (e) => {
 const LIGHT_TERMS = { low: ["low"], indirect: ["indirect"], sun: ["full sun"], shade: ["partial shade", "part shade", "part sun"] };
 const matchesLight = (p, key) => LIGHT_TERMS[key].some((t) => clean(p.sunlight).toLowerCase().includes(t));
 
+// Newest search wins: a slower, older search must not overwrite the results of a newer one.
+let searchId = 0;
 async function runSearch() {
   const q = $("#q").value.trim(), light = $("#light-filter").value;
+  const id = ++searchId;
   if (!q && !light) return showRecommended();
   setMsg("Searching...");
   try {
     let list = q ? await Api.search(q) : await Api.local(); // filter only: browse our whole list
+    if (id !== searchId) return; // a newer search started while we waited
     if (light) list = list.filter((p) => matchesLight(p, light));
     showResults(list);
     setMsg(list.length ? plural(list.length, "plant") : "No plants found. Try another name or light level.");
   } catch (err) {
-    setMsg("Could not load plants: " + err.message);
+    if (id === searchId) setMsg("Could not load plants: " + err.message);
   }
 }
 $("#explore-form").addEventListener("submit", (e) => { e.preventDefault(); runSearch(); });
@@ -49,7 +53,7 @@ $("#q").addEventListener("input", () => { if (!$("#q").value.trim()) runSearch()
 // Opens with random picks from our local list (instant, no API call)
 async function showRecommended() {
   try {
-    const picks = [...(await Api.local())].sort(() => Math.random() - 0.5).slice(0, 8);
+    const picks = Api.shuffle(await Api.local()).slice(0, 8);
     showResults(picks);
     setMsg("Recommended plants");
   } catch (err) { setMsg("Could not load plants: " + err.message); }
@@ -127,6 +131,10 @@ async function openPlant(id) {
     const [wiki] = await Promise.allSettled([title ? Api.wiki(title) : Promise.reject(new Error("no title"))]);
     const w = wiki.status === "fulfilled" ? wiki.value : null;
     currentPlant = { ...p, wikiImage: w?.thumbnail?.source };
+    // Duplicates are allowed: suggest a free name ("Monstera 2") that the person can edit
+    let taken = [];
+    try { taken = await DB.plantNames(); } catch {}
+    const suggested = DB.nextName((p.common_name || p.scientific_name?.[0] || "Unnamed plant").slice(0, 50), taken);
     const photo = p.default_image?.regular_url ?? w?.thumbnail?.source;
     const desc = w?.extract || (typeof p.description === "string" && !/upgrade/i.test(p.description) ? p.description : "No description available.");
     box.innerHTML = `
@@ -137,6 +145,7 @@ async function openPlant(id) {
       <p>${esc(desc)}</p>
       ${w?.content_urls ? `<p><a href="${esc(w.content_urls.desktop.page)}" target="_blank" rel="noopener">Read more on Wikipedia</a></p>` : ""}
       <p id="details-msg" class="gd-msg">${esc(notice)}</p>
+      <div class="gd-row"><input id="plant-name" class="gd-input" maxlength="60" value="${esc(suggested)}" placeholder="Name in your garden" aria-label="Name in your garden"></div>
       <div class="gd-row"><button class="gd-btn" data-add>Add to my garden</button></div>`;
   } catch (err) {
     box.innerHTML = `<p class="gd-msg">Could not load details: ${esc(err.message)}</p>`;
@@ -150,7 +159,7 @@ $("#plant-body").addEventListener("click", async (e) => {
   try {
     await DB.addPlant({
       perenual_id: currentPlant.id,
-      name: currentPlant.common_name || currentPlant.scientific_name?.[0] || "Unnamed plant",
+      name: ($("#plant-name")?.value.trim() || currentPlant.common_name || currentPlant.scientific_name?.[0] || "Unnamed plant").slice(0, 60),
       image_url: currentPlant.default_image?.thumbnail ?? currentPlant.wikiImage ?? null,
       sunlight: clean(currentPlant.sunlight),
       water_every_days: currentPlant.water_every_days ?? Api.waterDays(currentPlant.watering),

@@ -4,11 +4,11 @@ const userLabel = document.getElementById("username");
 const userMenu = document.getElementById("user-menu");
 
 function renderUser(user) {
-  const name = user.email.split("@")[0]; // the username (db.js stores it as username@AUTH_DOMAIN)
-  const pretty = name.charAt(0).toUpperCase() + name.slice(1);
+  // The username exactly as typed at sign-up (kept in user_metadata). Older accounts have none, so they fall back to the lowercase email name.
+  const name = user.user_metadata?.username || user.email.split("@")[0];
   userLabel.textContent = name.length > 8 ? name.slice(0, 7) + "…" : name; // keep it inside the pill
   document.getElementById("user-fullname").textContent = name;
-  document.getElementById("post-title").textContent = pretty + "’s Little Green Corner";
+  document.getElementById("post-title").textContent = name + "’s Little Green Corner";
 }
 
 // The login check itself is done by js/guard.js (loaded in the <head>)
@@ -28,7 +28,18 @@ userBtn.addEventListener("keydown", (e) => {
 document.addEventListener("click", (e) => { if (!userBtn.parentElement.contains(e.target)) setMenu(false); }); // click outside
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") { setMenu(false); userBtn.focus(); } });
 
-document.getElementById("signout-btn").addEventListener("click", () => DB.signOut());
+// Supabase does not throw: it returns { error }. On success guard.js sends the visitor to before_login.html.
+const signOutBtn = document.getElementById("signout-btn");
+signOutBtn.addEventListener("click", async () => {
+  signOutBtn.disabled = true;
+  try {
+    const { error } = await DB.signOut();
+    if (error) throw error;
+  } catch (err) {
+    alert("Could not sign out: " + err.message);
+    signOutBtn.disabled = false;
+  }
+});
 
 // ---------- Watering badge on "Personal Garden" ----------
 const dueBadge = document.getElementById("due-badge");
